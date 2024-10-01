@@ -1,12 +1,25 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DiceGame
 {
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Bem vindo ao Dice Game!!!!");
+
+            Game intialGame = new Game();
+            intialGame.PlayerCreater();
+            intialGame.Rounds();
+           
+        }
+    }
     public class Game
     {
         string player1;
         string player2;
-        int roundsNumber = 0;
+        int roundsNumber = 1;
         int scorePlayer1 = 0;
         int scorePlayer2 = 0;
         int valuePlayer1;
@@ -30,13 +43,14 @@ namespace DiceGame
 
         public void Rounds()
         {
-            if (roundsNumber < 3)
+            while (roundsNumber < 4 ) //vai ao console fim de jogo e so depois é que faz a 3rodada...
             {
                 Console.WriteLine($"Rodada {roundsNumber}");
-                GameStart();
                 ScoreBoard();
+                GameStart();
                 roundsNumber++;
             }
+            
 
             Console.WriteLine($"Fim do Jogo!!!!");
             if (scorePlayer1 > scorePlayer2)
@@ -51,6 +65,7 @@ namespace DiceGame
             {
                 Console.WriteLine("O jogo ficou empatado!");
             }
+            
         }
 
         public void ScoreBoard()
@@ -58,12 +73,12 @@ namespace DiceGame
             Console.WriteLine($"Pontuação {player1} : {scorePlayer1}");
             Console.WriteLine($"Pontuaçãp {player2} : {scorePlayer2}");
 
-            if (roundsNumber == 0)
+            if (roundsNumber == 1) 
             {
                 Console.WriteLine($"{player1} e {player2} preparados?(Pressionem qualquer tecla)");
                 Console.ReadKey();
             }
-            roundsNumber++;
+           
         }
 
         public void GameStart()
@@ -71,22 +86,22 @@ namespace DiceGame
             Console.WriteLine($"{player1} pode lançar o dado! (Pressiona uma tecla.)");
             Console.ReadKey();
             valuePlayer1 = RollDice();
-            Console.WriteLine($"{scorePlayer1}");
+            Console.WriteLine($"{valuePlayer1}");
             Console.WriteLine($"{player2} pode lançar o dado! (Pressiona uma tecla.)");
             Console.ReadKey();
             valuePlayer2 = RollDice();
-            Console.WriteLine($"{scorePlayer2}");
+            Console.WriteLine($"{valuePlayer2}");
 
             Console.WriteLine($"{player1} tirou o número {valuePlayer1} e {player2} tirou o número {valuePlayer2}. ");
 
             if (valuePlayer1 > valuePlayer2)
             {
-                Console.WriteLine($"{player1} venceu a variavelrodada");
+                Console.WriteLine($"{player1} venceu a {roundsNumber}ª rodada.");
                 scorePlayer1++;
             }
             else if (valuePlayer2 > valuePlayer1)
             {
-                Console.WriteLine($"{player2} venceu a variavelrodadas.");
+                Console.WriteLine($"{player2} venceu a {roundsNumber}ª rodada.");
                 scorePlayer2++;
             }
             else
@@ -103,17 +118,5 @@ namespace DiceGame
         }
     }
 
-    class Program
-    {
-        public static void Main(string[] args)
-        {
-            Console.WriteLine("Bem vindo ao Dice Game!!!!");
-            
-            Game intialGame = new Game();
-            intialGame.PlayerCreater();
-            intialGame.ScoreBoard();
-            intialGame.Rounds();
-            intialGame.GameStart();
-        }
-    }
+    
 }
